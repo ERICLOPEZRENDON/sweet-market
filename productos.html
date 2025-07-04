@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Market - Productos</title>
+    <link rel="stylesheet" href="./estilos/estilos2.css">
+    <link rel="shortcut icon" href="logo.jpeg">
+
+    <script>
+        // Mostrar todos los productos por defecto
+        function mostrarProductos() {
+            const categoria = document.getElementById("categoria").value;
+            const secciones = document.querySelectorAll(".categoria");
+
+            // Si el valor de categoría está vacío, se muestran todas las categorías
+            if (categoria === "") {
+                secciones.forEach(section => {
+                    section.style.display = "block"; // Muestra todas las secciones
+                });
+            } else {
+                secciones.forEach(section => {
+                    section.style.display = "none"; // Oculta todas las secciones
+                });
+
+                // Muestra la sección seleccionada
+                document.getElementById(categoria).style.display = "block";
+            }
+        }
+
+        // Añadir al carrito
+        function añadirAlCarrito(producto, cantidad, precio, btnId) {
+            cantidad = parseInt(cantidad); // Asegura que la cantidad sea un número entero
+
+            // Si la cantidad es menor o igual a 0 o no es válida, le asignamos 1
+            if (cantidad <= 0 || isNaN(cantidad)) {
+                cantidad = 1; // Asignamos 1 como valor por defecto
+            }
+
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            carrito.push({ producto, cantidad, precio });
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+
+            // Mostrar la palomita verde junto al botón
+            const btn = document.getElementById(btnId);
+            const palomita = document.createElement('span');
+            palomita.textContent = '✔'; // Palomita verde
+            palomita.style.color = 'green';
+            palomita.style.marginLeft = '10px';
+            palomita.style.fontSize = '20px';
+            btn.appendChild(palomita);
+
+            // Eliminar la palomita después de 2 segundos
+            setTimeout(() => {
+                palomita.remove();
+            }, 2000);
+
+            actualizarCarrito();
+        }
+
+        // Actualizar el contador del carrito
+        function actualizarCarrito() {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            document.getElementById('carrito-count').textContent = carrito.length;
+        }
+
+        // Mostrar todos los productos al cargar la página
+        window.onload = () => {
+            mostrarProductos();
+            actualizarCarrito();
+        };
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Sweet Market</h1>
+        <nav>
+            <ul>
+                <li><a href="index_2.html">Inicio</a></li>
+                <li><a href="registro_inicio.html">Registro</a></li>
+                <li><a href="carrito.html">Carrito</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="equipo.html">Equipo</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Productos por Categoría</h2>
+        <label for="categoria">Selecciona una categoría:</label>
+        <select id="categoria" onchange="mostrarProductos()">
+            <option value="">--Seleccionar--</option>
+            <option value="dulces">Dulces</option>
+            <option value="salados">Salados</option>
+            <option value="picosos">Picosos</option>
+        </select>
+
+        <!-- Categoría Dulces -->
+        <div id="dulces" class="categoria">
+            <h3>Dulces</h3>
+            <div>
+                <img src="dulce1.jpg" alt="Dulce 1 - Chocolates de leche" width="100">
+                <p>Chocolates de leche - $10.00</p>
+                <input type="number" id="cantidad_dulce1" name="cantidad" min="1" value="1" required>
+                <button id="btn_dulce1" onclick="añadirAlCarrito('Chocolates de leche', document.getElementById('cantidad_dulce1').value, 10, 'btn_dulce1')">Añadir al carrito</button>
+            </div>
+            <div>
+                <img src="dulce2.jpg" alt="Dulce 2 - Caramelos surtidos" width="100">
+                <p>Caramelos surtidos - $5.00</p>
+                <input type="number" id="cantidad_dulce2" name="cantidad" min="1" value="1" required>
+                <button id="btn_dulce2" onclick="añadirAlCarrito('Caramelos surtidos', document.getElementById('cantidad_dulce2').value, 5, 'btn_dulce2')">Añadir al carrito</button>
+            </div>
+            <div>
+                <img src="dulce3.jpg" alt="Dulce 3 - Gomitas de fruta" width="100">
+                <p>Gomitas de fruta - $7.00</p>
+                <input type="number" id="cantidad_dulce3" name="cantidad" min="1" value="1" required>
+                <button id="btn_dulce3" onclick="añadirAlCarrito('Gomitas de fruta', document.getElementById('cantidad_dulce3').value, 7, 'btn_dulce3')">Añadir al carrito</button>
+            </div>
+        </div>
+
+        <!-- Categoría Salados -->
+        <div id="salados" class="categoria">
+            <h3>Salados</h3>
+            <div>
+                <img src="salado1.jpg" alt="Salado 1 - Chips de maíz" width="100">
+                <p>Chips de maíz - $3.00</p>
+                <input type="number" id="cantidad_salado1" name="cantidad" min="1" value="1" required>
+                <button id="btn_salado1" onclick="añadirAlCarrito('Chips de maíz', document.getElementById('cantidad_salado1').value, 3, 'btn_salado1')">Añadir al carrito</button>
+            </div>
+            <div>
+                <img src="salado2.jpg" alt="Salado 2 - Palomitas de maíz" width="100">
+                <p>Palomitas de maíz - $2.50</p>
+                <input type="number" id="cantidad_salado2" name="cantidad" min="1" value="1" required>
+                <button id="btn_salado2" onclick="añadirAlCarrito('Palomitas de maíz', document.getElementById('cantidad_salado2').value, 2.5, 'btn_salado2')">Añadir al carrito</button>
+            </div>
+            <div>
+                <img src="salado3.jpg" alt="Salado 3 - Frutos secos" width="100">
+                <p>Frutos secos - $4.00</p>
+                <input type="number" id="cantidad_salado3" name="cantidad" min="1" value="1" required>
+                <button id="btn_salado3" onclick="añadirAlCarrito('Frutos secos', document.getElementById('cantidad_salado3').value, 4, 'btn_salado3')">Añadir al carrito</button>
+            </div>
+        </div>
+
+        <!-- Categoría Picosos -->
+        <div id="picosos" class="categoria">
+            <h3>Picosos</h3>
+            <div>
+                <img src="picoso1.jpg" alt="Picoso 1 - Chips picantes" width="100">
+                <p>Chips picantes - $3.50</p>
+                <input type="number" id="cantidad_picoso1" name="cantidad" min="1" value="1" required>
+                <button id="btn_picoso1" onclick="añadirAlCarrito('Chips picantes', document.getElementById('cantidad_picoso1').value, 3.5, 'btn_picoso1')">Añadir al carrito</button>
+            </div>
+            <div>
+                <img src="picoso2.jpg" alt="Picoso 2 - Gomitas picantes" width="100">
+                <p>Gomitas picantes - $6.00</p>
+                <input type="number" id="cantidad_picoso2" name="cantidad" min="1" value="1" required>
+                <button id="btn_picoso2" onclick="añadirAlCarrito('Gomitas picantes', document.getElementById('cantidad_picoso2').value, 6, 'btn_picoso2')">Añadir al carrito</button>
+            </div>
+            <div>
+                <img src="picoso3.jpg" alt="Picoso 3 - Cacahuate enchilado" width="100">
+                <p>Cacahuate enchilado - $5.00</p>
+                <input type="number" id="cantidad_picoso3" name="cantidad" min="1" value="1" required>
+                <button id="btn_picoso3" onclick="añadirAlCarrito('Cacahuate enchilado', document.getElementById('cantidad_picoso3').value, 5, 'btn_picoso3')">Añadir al carrito</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+    <p>© 2024 Sweet Market. Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>
+

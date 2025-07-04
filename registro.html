@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Persona</title>
+    <link rel="shortcut icon" href="logos/Logo_mh.png"/>
+    <link rel="stylesheet" href="estilos/registro.css"> 
+    <script>
+        function validarContrasenas() { 
+            var contrasena = document.getElementById("contrasena").value; 
+            var confirmarContrasena = document.getElementById("confirmar_contrasena").value; 
+            var correo = document.getElementById("correo").value;
+
+            if (contrasena !== confirmarContrasena) { 
+                alert("Las contraseñas no coinciden. Por favor, verifica e intenta de nuevo."); 
+                return false; 
+            } 
+            if (contrasena.length < 8 || contrasena.length > 10) {
+                alert("La contraseña debe tener entre 8 y 10 caracteres.");
+                return false;
+            }
+
+            var regexCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!regexCorreo.test(correo)) {
+                alert("Por favor, ingresa un correo electrónico válido.");
+                return false;
+            }
+
+            return true; 
+        }
+    </script>
+</head>
+<body>
+    <section class="contenedor-registro">
+        <div class="registro-caja">
+            <form action="Registro.jsp" method="post" onsubmit="return validarContrasenas();">
+                <h2>Registro de Persona</h2>
+                <div class="campo">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Ingresa tu nombre" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="ap_paterno">Apellido Paterno:</label>
+                    <input type="text" id="ap_paterno" name="ap_paterno" required placeholder="Ingresa tu apellido paterno" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="ap_materno">Apellido Materno:</label>
+                    <input type="text" id="ap_materno" name="ap_materno" required placeholder="Ingresa tu apellido materno" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="fecha_nac">Fecha de Nacimiento:</label>
+                    <input type="date" id="fecha_nac" name="fecha_nac" required>
+                </div>
+                <div class="campo">
+                    <label for="calle">Calle:</label>
+                    <input type="text" id="calle" name="calle" required placeholder="Ingresa tu calle" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="colonia">Colonia:</label>
+                    <input type="text" id="colonia" name="colonia" required placeholder="Ingresa tu colonia" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="municipio">Municipio:</label>
+                    <input type="text" id="municipio" name="municipio" required placeholder="Ingresa tu municipio" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="codigo_postal">Código Postal:</label>
+                    <input type="number" id="codigo_postal" name="codigo_postal" required placeholder="Ingresa tu código postal">
+                </div>
+                <div class="campo">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" required placeholder="Ingresa tu teléfono" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="correo">Correo Electrónico:</label>
+                    <input type="email" id="correo" name="correo" required placeholder="Ingresa tu correo" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="contrasena">Contraseña:</label>
+                    <input type="password" id="contrasena" name="contrasena" required placeholder="Ingresa tu contraseña" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <label for="confirmar_contrasena">Escribe Nuevamente la Contraseña:</label>
+                    <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required placeholder="Confirma tu contraseña" autocomplete="off">
+                </div>
+                <div class="campo">
+                    <button type="submit" class="boton-registro">Registrar</button>
+                </div>
+            </form>
+            <div>
+                <a href="inicio.html">
+                    <button class="boton-regresar" type="button">Regresar al Inicio</button>
+                </a>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

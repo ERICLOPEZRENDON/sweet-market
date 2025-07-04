@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Market - Carrito</title>
+    <link rel="stylesheet" href="./estilos/estilos3.css">
+    <link rel="shortcut icon" href="logo.jpeg">
+
+    <script>
+        // Cargar productos en el carrito
+        function cargarCarrito() {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            const tabla = document.getElementById('tablaCarrito');
+            let total = 0;
+            tabla.innerHTML = ''; // Limpiar la tabla antes de cargarla de nuevo
+
+            // Cabecera de la tabla
+            const encabezado = `
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            `;
+            tabla.innerHTML = encabezado;
+
+            // Si el carrito está vacío, mostrar un mensaje
+            if (carrito.length === 0) {
+                const mensaje = document.createElement('tr');
+                mensaje.innerHTML = `<td colspan="5" style="text-align:center;">Tu carrito está vacío</td>`;
+                tabla.appendChild(mensaje);
+                return;
+            }
+
+            // Mostrar los productos del carrito
+            carrito.forEach((item, index) => {
+                const subtotal = item.cantidad * item.precio;
+                total += subtotal;
+
+                const fila = document.createElement('tr');
+                fila.innerHTML = `
+                    <td>${item.producto}</td>
+                    <td>${item.cantidad}</td>
+                    <td>$${item.precio.toFixed(2)}</td>
+                    <td>$${subtotal.toFixed(2)}</td>
+                    <td><button onclick="eliminarProducto(${index})">Eliminar</button></td>
+                `;
+                tabla.appendChild(fila);
+            });
+
+            // Mostrar total
+            const totalFila = document.createElement('tr');
+            totalFila.innerHTML = `
+                <td colspan="4"><strong>Total</strong></td>
+                <td><strong>$${total.toFixed(2)}</strong></td>
+            `;
+            tabla.appendChild(totalFila);
+        }
+
+        // Eliminar producto del carrito
+        function eliminarProducto(index) {
+            const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+            carrito.splice(index, 1); // Eliminar el producto en la posición indicada
+            localStorage.setItem('carrito', JSON.stringify(carrito)); // Actualizar el carrito en localStorage
+            cargarCarrito(); // Recargar el carrito para reflejar los cambios
+        }
+
+        // Realizar la compra
+        function realizarCompra() {
+            alert('Gracias por tu compra!');
+            localStorage.removeItem('carrito'); // Limpiar carrito
+            location.reload(); // Recargar la página para actualizar
+        }
+    </script>
+</head>
+<body onload="cargarCarrito()">
+    <header>
+        <h1>Sweet Market</h1>
+        <nav>
+            <ul>
+                <li><a href="index_2.html">Inicio</a></li>
+                <li><a href="registro_inicio.html">Registro</a></li>
+                <li><a href="carrito.html">Carrito</a></li>
+                <li><a href="productos.html">Productos</a></li>
+                <li><a href="equipo.html">Equipo</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h2>Carrito de Compras</h2>
+        <table id="tablaCarrito">
+            <!-- Los productos se agregarán aquí -->
+        </table>
+        <button onclick="realizarCompra()">Realizar Compra</button>
+    </main>
+
+    <footer>
+    <p>© 2024 Sweet Market. Todos los derechos reservados.</p>
+  </footer>
+</body>
+</html>
+
